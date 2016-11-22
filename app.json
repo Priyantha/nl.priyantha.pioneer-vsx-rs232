@@ -1,0 +1,377 @@
+{
+    "id": "nl.priyantha.pioneer-vsx-rs232",
+    "name": {
+        "en": "Pioneer VSX RS232 Control App",
+	"nl": "Pioneer VSX RS232 Control App"
+    },
+    "version": "0.0.1",
+    "compatibility": "0.x || 1.x",
+    "author": {
+        "name": "Priyantha Bleeker",
+        "email": "priyantha@priyantha.nl"
+    },
+    "images": {
+      "large": "./assets/images/large.jpg",
+      "small": "./assets/images/small.jpg"
+    },
+    "category": "appliances",
+    "description": {
+      "en": "Pioneer VSX Receiver Control app for Athom Homey using RS232 with rfc2217_server.py",
+      "nl": "Dit is een Pioneer VSX Receiver aansturing app voor Homey via RS232 met rfc2217_server.py"
+    },
+    "dependencies": {
+    		"net": "*"
+    },
+    "drivers": [
+      {
+          "id": "amplifier",
+          "name": {
+              "en": "Pioneer-rs232 amplifier",
+              "nl": "Pioneer-rs232 versterker"
+          },
+          "images": {
+              "large": "drivers/amplifier/assets/images/large.jpg",
+              "small": "drivers/amplifier/assets/images/small.jpg"
+          },
+          "class": "other",
+          "capabilities": [ "onoff" ],
+          "mobile": {
+	           "components": [
+	              {
+		                "id": "icon",
+		                "capabilities": ["onoff"]
+		            }
+		         ]
+          },
+          "pair": [
+            {
+              "id": "start"
+            },
+            {
+              "id": "list_amplifiers",
+              "template": "list_devices",
+              "navigation": {
+                  "next": "add_amplifiers"
+              }
+            },
+            {
+              "id": "add_amplifiers",
+              "template": "add_devices"
+            }
+          ],
+          "settings": [
+            {
+              "type": "group",
+                      "label": {
+                          "en": "General settings",
+                          "nl": "Algemene instellingen"
+                      },
+                      "children": [
+                          {
+                              "id": "settingIPAddress",
+                              "type": "text",
+                              "label": {
+                                  "en": "IP address",
+                                  "nl": "IP adres"
+                              },
+                              "value": "0.0.0.0"
+                          }
+                      ]
+            }
+          ]
+      }
+    ],
+    "flow": {
+        "actions": [
+        {
+            "id": "powerOn",
+            "title": {
+                "en": "Turn power on",
+                "nl": "Zet aan"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              },
+              {
+                "name": "zone",
+                "type": "dropdown",
+                "values": [
+                  { "id": "Whole unit", "label": {
+                     "en": "Whole unit",
+                     "nl": "Gehele apparaat"
+                     }
+                  },
+                  { "id": "Main Zone", "label": { "en": "Main Zone" }},
+                  { "id": "Zone2", "label": { "en": "Zone 2" }}
+                ],
+                "placeholder": { "en": "Zone" }
+              }
+            ]
+        },
+        {
+            "id": "powerOff",
+            "title": {
+                "en": "Power off/standby",
+                "nl": "Uitschakelen/standby"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              },
+              {
+                "name": "zone",
+                "type": "dropdown",
+                "values": [
+                  { "id": "Whole unit", "label": {
+                     "en": "Whole unit",
+                     "nl": "Gehele apparaat"
+                     }
+                  },
+                  { "id": "Main Zone", "label": { "en": "Main Zone" }},
+                  { "id": "Zone2", "label": { "en": "Zone 2" }}
+                ],
+                "placeholder": { "en": "Zone" }
+              }
+            ]
+        },
+        {
+            "id": "changeInput",
+            "title": {
+                "en": "Switch input",
+                "nl": "Schakel input"
+            },
+            "args": [
+              {
+                "name": "input",
+                "type": "autocomplete",
+                "placeholder": {
+                  "en": "input",
+                  "nl": "input"
+                }
+              },
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              },
+              {
+                "name": "zone",
+                "type": "dropdown",
+                "values": [
+                  { "id": "Main Zone", "label": { "en": "Main Zone" }},
+                  { "id": "Zone2", "label": { "en": "Zone 2" }},
+                  { "id": "Zone3", "label": { "en": "Zone 3" }}
+                ],
+                "placeholder": { "en": "Zone" }
+              }
+            ]
+        },
+        {
+            "id": "mute",
+            "title": {
+                "en": "Mute",
+                "nl": "Mute"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              },
+              {
+                "name": "zone",
+                "type": "dropdown",
+                "values": [
+                  { "id": "Main Zone", "label": { "en": "Main Zone" }},
+                  { "id": "Zone2", "label": { "en": "Zone 2" }}
+                ],
+                "placeholder": { "en": "Zone" }
+              }
+            ]
+        },
+        {
+            "id": "unMute",
+            "title": {
+                "en": "Turn mute off",
+                "nl": "Zet mute uit"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              },
+              {
+                "name": "zone",
+                "type": "dropdown",
+                "values": [
+                  { "id": "Main Zone", "label": { "en": "Main Zone" }},
+                  { "id": "Zone2", "label": { "en": "Zone 2" }}
+                ],
+                "placeholder": { "en": "Zone" }
+              }
+            ]
+        },
+        {
+            "id": "setVolume",
+            "title": {
+                "en": "Change volume",
+                "nl": "Verander volume"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              },
+              {
+                "name": "zone",
+                "type": "dropdown",
+                "values": [
+                  { "id": "Main Zone", "label": { "en": "Main Zone" }},
+                  { "id": "Zone2", "label": { "en": "Zone 2" }}
+                ],
+                "placeholder": { "en": "Zone" }
+              },
+              {
+                "name": "volume",
+                "type": "number",
+                "min": 0,
+                "max": 93,
+                "placeholder": {
+                   "en": "Target volume",
+                   "nl": "Gewenst volume"
+                }
+              }
+            ]
+        },
+        {
+            "id": "volumeUp",
+            "title": {
+                "en": "Volume up",
+                "nl": "Volume omhoog"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              },
+              {
+                "name": "zone",
+                "type": "dropdown",
+                "values": [
+                  { "id": "Main Zone", "label": { "en": "Main Zone" }},
+                  { "id": "Zone2", "label": { "en": "Zone 2" }}
+                ],
+                "placeholder": { "en": "Zone" }
+              },
+              {
+                "name": "volume",
+                "type": "number",
+                "min": 0,
+                "max": 93,
+                "placeholder": {
+                   "en": "Steps volume up",
+                   "nl": "Stappen volume omhoog"
+                }
+              }
+            ]
+        },
+        {
+            "id": "volumeDown",
+            "title": {
+                "en": "Volume Down",
+                "nl": "Volume omlaag"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              },
+              {
+                "name": "zone",
+                "type": "dropdown",
+                "values": [
+                  { "id": "Main Zone", "label": { "en": "Main Zone" }},
+                  { "id": "Zone2", "label": { "en": "Zone 2" }}
+                ],
+                "placeholder": { "en": "Zone" }
+              },
+              {
+                "name": "volume",
+                "type": "number",
+                "min": 0,
+                "max": 93,
+                "placeholder": {
+                   "en": "Steps volume down",
+                   "nl": "Stappen volume omlaag"
+                }
+              }
+            ]
+        },
+        {
+            "id": "customCommand",
+            "title": {
+                "en": "Send raw command"
+            },
+            "args": [
+              {
+                "name": "command",
+                "type": "text",
+                "placeholder": {
+                  "en": "command"
+                }
+              },
+              {
+                "name": "device",
+                "type": "device",
+                "placeholder": {
+                  "en": "Select amplifier",
+                  "nl": "Selecteer versterker"
+                },
+                "filter": "driver_id=amplifier"
+              }
+            ]
+        }
+      ]
+    }
+}
